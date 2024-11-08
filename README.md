@@ -47,15 +47,15 @@ If you are not using actual EEG, but want to use simulated EEG, for instance bec
 3. Open a browser and go to `localhost:8050`. You should see the control room.
 
 4. Training 
-   1. To start the training phase, in this order, press “training” in the speller (starts the speller UI) and “run_training” in the macros (starts the LSL recording). 
+   1. To start the training phase, in this order, press “TRAINING” in the dp-cvep-speller (starts the speller UI) and “RUN TRAINING” in the Macros (starts the LSL recording). 
    2. The speller waits for a keypress to continue, press key c.
-   3. The speller runs 10 cued trials (indicated by green cues), then stops. Press “stop LSL” in the macros (stops the LSL recording and saves the data). Press c to quit the speller.
+   3. The speller runs 10 cued trials (indicated by green cues), then stops. Press “STOP LSL RECORDING” in the macros (stops the LSL recording and saves the data). Press c to quit the speller.
 
 5. Calibration
-   1. Now you have training data, so we can calibrate the model. Press “fit model” in the decoder (calibrated the model). It prints the performance in the log (left bottom), and shows this in a figure. Close the figure to continue. 
+   1. Now you have training data, so we can calibrate the model. Press “FIT MODEL” in the dp-cvep-decoder (calibrated the model). It prints the performance in the log (left bottom), and shows this in a figure. Close the figure to continue. 
  
 6. Online
-   1. To start the online phase, in this order, press “load model” in decoder (loads the trained model), “connect decoder” in decoder (starts the decoder), “online” in speller (starts the speller UI), “start decoding” in decoder (starts decoding), “start online” in macros (starts the LSL recording). 
+   1. To start the online phase, in this order, press “LOAD MODEL” in dp-cvep-decoder (loads the trained model), “CONNECT DECODER” in dp-cvep-decoder (starts the decoder), “ONLINE” in dp-cvep-speller (starts the speller UI), “DECODE ONLINE” in dp-cvep-decoder (starts decoding), “RUN ONLINE” in Macros (starts the LSL recording). 
    2. The speller waits for a keypress to continue, press key c 
    3. The speller runs 999 trials, then stops. The classifier is applied using dynamic stopping, so trials will stop as soon as possible. If a symbol is selected, it is highlighted in blue and added to the text. If !! is spelled, the speller is stopped. You can press q or escape to stop the speller manually. The < symbol performs a backspace.
 
