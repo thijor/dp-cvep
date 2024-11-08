@@ -109,7 +109,7 @@ modules_root = '../'
 
 [macros.run_training]
     name = 'RUN TRAINING'
-    description = 'Run the paradigm offline to collect calibration data'
+    description = 'Start the recording of training data'
 [macros.run_training.default_json]
     fname = 'sub-P001_ses-S001_run-001_task-training'
     data_root = '{str(DATA_DIR.resolve())}'
@@ -122,14 +122,14 @@ modules_root = '../'
     com4 = ['dp-lsl-recording', 'RECORD']
 
 [macros.stop_streaming]
-    name = 'STOP_LSL_RECORDING'
-    description = 'stop the offline recording'
+    name = 'STOP LSL RECORDING'
+    description = 'Stop the recording'
 [macros.stop_streaming.cmds]
     com1 = ['dp-lsl-recording', 'STOPRECORD']
 
 [macros.run_online]
     name = 'RUN ONLINE'
-    description = 'Run the paradigm online - this requires a trained model to be present'
+    description = 'Start the recording of online data'
 [macros.run_online.default_json]
     fname = 'sub-P001_ses-S001_run-001_task-online'
     data_root = '{str(DATA_DIR.resolve())}' 
