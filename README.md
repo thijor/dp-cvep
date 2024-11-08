@@ -12,12 +12,7 @@ This repository contains the documentation and resources to set up a [Dareplane]
 
 ```conda activate do-cvep```
 
-3. Run the setup script `setup_cvep_demo.py`. It downloads all required modules and edits the `config.toml` files ready for a demo in the labs. If you want to run the demo elsewhere, please check the configs and adjust where necessary. For instance: 
-    - dp-cvep-speller
-        - The screen ID, which is on which screen you are opening the speller UI.
-        - The screen resolution of the screen where the speller UI is presented.
-    - dp-cvep-decoder
-        - The channel names might need to be changed to e.g., 1, 2, 3, 4, 5, 6, 7 (e.g., for the mock streamer).
+3. Run the setup script `setup_cvep_demo.py`. It downloads all required modules and edits the `config.toml` files ready for a demo in the labs. 
 
 4. In the `dp-cvep` environment, install all the requirements of each of the downloaded Dareplane modules that we be used as follows:
 
@@ -25,9 +20,21 @@ This repository contains the documentation and resources to set up a [Dareplane]
 
 5. Install the LSL Recorder (https://github.com/labstreaminglayer/App-LabRecorder) and make sure it is alive (on the background).
 
-6. If you are not using actual EEG, but want to use simulated EEG, use the Dareplane mock streamer (https://github.com/bsdlab/dp-mockup-streamer). To run it for the demo, run it as follows:
+The demo has been set up for the lab (MM 01.422). If you want to run the demo elsewhere, please check the dp-cvep-speller `speller.toml` config:
+  - The screen ID to open the speller UI at the correct screen: `speller.screen.id`
+  - The screen resolution of that screen: `speller.screen.resolution`
+  - The screen refresh rate of that screen: `speller.screen.refresh_rate_hz`
+
+If you are not using actual EEG, but want to use simulated EEG, for instance because you are testing the software, please do the following instead of starting a normal EEG stream:
+
+6. Clone the Dareplane mock streamer (https://github.com/bsdlab/dp-mockup-streamer). 
+7. Run it as follows:
 
 ```python -m mockup_streamer.random_cli --stream_name="BioSemi" --sfreq=512```
+
+8. Change the following in the dp-cvep-decoder `decoder.toml` config:
+   - The selected channels: `training.features.selected_channels = [0, 1, 2, 3, 4, 5, 6]`
+   - The selected channels: `online.input.selected_channels = [0, 1, 2, 3, 4, 5, 6]`
 
 ## Running
 
