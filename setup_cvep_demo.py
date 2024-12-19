@@ -69,6 +69,7 @@ for repo in repos:
 # Data directory relative to SETUP_FOLDER_NAME
 DATA_DIR = root_dir.joinpath("./data").resolve()
 CODES_FILE = root_dir.joinpath("dp-cvep-speller/cvep_speller/codes/mgold_61_6521.npz")
+LAYOUT_FILE = root_dir.joinpath("dp-cvep-speller/cvep_speller/codes/layout.json")
 CAP_FILE = root_dir.joinpath("dp-cvep-decoder/cvep_decoder/caps/thielen7.loc")
 
 # ----------------------------------------------------------------------------
@@ -165,6 +166,7 @@ cfg["training"]["out_file_meta"] = str(DATA_DIR.joinpath(
 ).resolve())
 cfg["training"]["data_root"] = str(DATA_DIR.resolve())
 cfg["training"]["codes_file"] = str(CODES_FILE.resolve())
+cfg["training"]["optimal_layout_file"] = str(LAYOUT_FILE.resolve())
 
 cfg["training"]["features"]["data_stream_name"] = EEG_LSL_STREAM_NAME
 cfg["training"]["features"]["lsl_marker_stream_name"] = MARKER_LSL_STREAM_NAME
@@ -172,11 +174,13 @@ cfg["training"]["features"]["selected_channels"] = [
     "EX1", "EX2", "EX3", "EX4", "EX5", "EX6", "EX7",
 ]
 
-cfg["training"]["decoder"]["event"] = "duration"
+cfg["training"]["decoder"]["event"] = "contrast"
 cfg["training"]["decoder"]["encoding_length_s"] = 0.3
 cfg["training"]["decoder"]["tmin_s"] = 0.1
 cfg["training"]["decoder"]["target_accuracy"] = 0.999
 
+
+cfg["online"]["codes_file"] = str(CODES_FILE.resolve())
 cfg["online"]["classifier"]["file"] = str(DATA_DIR.joinpath(
     "./dp-cvep/sub-P001_ses-S001_classifier.early_stop.joblib"
 ).resolve())
