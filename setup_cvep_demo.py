@@ -162,7 +162,7 @@ cfg["training"]["out_file"] = str(DATA_DIR.joinpath(
     "./dp-cvep/sub-P001_ses-S001_classifier.joblib"
 ).resolve())
 cfg["training"]["out_file_meta"] = str(DATA_DIR.joinpath(
-    "./dp-cvep/sub-P001_ses-S001_classifier.meta.json"
+    "./dp-cvep/sub-P001_ses-S001_classifier_meta.json"
 ).resolve())
 cfg["training"]["data_root"] = str(DATA_DIR.resolve())
 cfg["training"]["codes_file"] = str(CODES_FILE.resolve())
@@ -182,10 +182,10 @@ cfg["training"]["decoder"]["target_accuracy"] = 0.999
 
 cfg["online"]["codes_file"] = str(CODES_FILE.resolve())
 cfg["online"]["classifier"]["file"] = str(DATA_DIR.joinpath(
-    "./dp-cvep/sub-P001_ses-S001_classifier.early_stop.joblib"
+    "./dp-cvep/sub-P001_ses-S001_classifier.joblib"
 ).resolve())
 cfg["online"]["classifier"]["meta_file"] = str(DATA_DIR.joinpath(
-    "./dp-cvep/sub-P001_ses-S001_classifier.meta.json"
+    "./dp-cvep/sub-P001_ses-S001_classifier_meta.json"
 ).resolve())
 
 cfg["online"]["input"]["lsl_stream_name"] = EEG_LSL_STREAM_NAME
