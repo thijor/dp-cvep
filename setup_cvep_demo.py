@@ -168,6 +168,8 @@ cfg["training"]["data_root"] = str(DATA_DIR.resolve())
 cfg["training"]["codes_file"] = str(CODES_FILE.resolve())
 cfg["training"]["optimal_layout_file"] = str(LAYOUT_FILE.resolve())
 
+
+cfg["training"]["features"]["number_of_keys"] = 52
 cfg["training"]["features"]["data_stream_name"] = EEG_LSL_STREAM_NAME
 cfg["training"]["features"]["lsl_marker_stream_name"] = MARKER_LSL_STREAM_NAME
 cfg["training"]["features"]["selected_channels"] = [
@@ -178,7 +180,6 @@ cfg["training"]["decoder"]["event"] = "contrast"
 cfg["training"]["decoder"]["encoding_length_s"] = 0.3
 cfg["training"]["decoder"]["tmin_s"] = 0.1
 cfg["training"]["decoder"]["target_accuracy"] = 0.999
-
 
 cfg["online"]["codes_file"] = str(CODES_FILE.resolve())
 cfg["online"]["classifier"]["file"] = str(DATA_DIR.joinpath(
