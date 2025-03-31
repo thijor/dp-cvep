@@ -1,10 +1,26 @@
-from git import Repo
 from pathlib import Path
 import shutil
 import subprocess
 import sys
 
+# ----------------------------------------------------------------------------
+# Install requirements
+# ----------------------------------------------------------------------------
+
+requirements = ["GitPython", "toml"]
+
+for req in requirements:
+    try:
+        __import__(req)
+    except ImportError:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", req])
+
+from git import Repo
 import toml
+
+# ----------------------------------------------------------------------------
+# Set up
+# ----------------------------------------------------------------------------
 
 # The name of the folder that is to be created to store all the modules
 SETUP_FOLDER_NAME = "cvep_speller_env"
@@ -15,21 +31,9 @@ DECODER_URL = "git@github.com:thijor/dp-cvep-decoder.git"
 SPELLER_URL = "git@github.com:thijor/dp-cvep-speller.git"
 LSL_URL = "git@github.com:bsdlab/dp-lsl-recording.git"
 
-EEG_LSL_STREAM_NAME = "BioSemi"
-MARKER_LSL_STREAM_NAME = "cvep-speller-stream"
-DECODER_OUTPUT_LSL_STREAM_NAME = "cvep-decoder-stream"
-
-# ----------------------------------------------------------------------------
-# Install requirements
-# ----------------------------------------------------------------------------
-
-requ_modules = ["GitPython"]
-
-for mod in requ_modules:
-    try:
-        __import__(mod)
-    except ImportError:
-        subprocess.check_call([sys.executable, "-m", "pip", "install", mod])
+DATA_STREAM_NAME = "BioSemi"
+MARKER_STREAM_NAME = "cvep-speller-stream"
+DECODER_STREAM_NAME = "cvep-decoder-stream"
 
 # ----------------------------------------------------------------------------
 # Grab the git repositories
@@ -69,7 +73,6 @@ for repo in repos:
 # Data directory relative to SETUP_FOLDER_NAME
 DATA_DIR = root_dir.joinpath("./data").resolve()
 CODES_FILE = root_dir.joinpath("dp-cvep-speller/cvep_speller/codes/mgold_61_6521.npz")
-LAYOUT_FILE = root_dir.joinpath("dp-cvep-speller/cvep_speller/codes/layout.json")
 CAP_FILE = root_dir.joinpath("dp-cvep-decoder/cvep_decoder/caps/thielen7.loc")
 
 # ----------------------------------------------------------------------------
@@ -143,9 +146,7 @@ modules_root = '../'
     com5 = ['dp-cvep-decoder', 'DECODE ONLINE']
 """
 
-control_room_cfg_pth = Path(
-    "./cvep_speller_env/dp-control-room/configs/cvep_speller.toml"
-)
+control_room_cfg_pth = Path("./cvep_speller_env/dp-control-room/configs/cvep_speller.toml")
 with open(control_room_cfg_pth, "w") as f:
     f.write(control_room_cfg)
 
@@ -156,51 +157,30 @@ with open(control_room_cfg_pth, "w") as f:
 decoder_cfg_pth = root_dir.joinpath("dp-cvep-decoder/configs/decoder.toml")
 cfg = toml.load(decoder_cfg_pth)
 
-cfg["cvep"]["capfile"] = str(CAP_FILE.resolve())
+cfg["data"]["data_root"] = str(DATA_DIR.resolve())
+cfg["data"]["selected_channels"] = ["EX1", "EX2", "EX3", "EX4", "EX5", "EX6", "EX7"]
+cfg["data"]["capfile"] = str(CAP_FILE.resolve())
 
-cfg["training"]["out_file"] = str(DATA_DIR.joinpath(
-    "./dp-cvep/sub-P001_ses-S001_classifier.joblib"
-).resolve())
-cfg["training"]["out_file_meta"] = str(DATA_DIR.joinpath(
-    "./dp-cvep/sub-P001_ses-S001_classifier_meta.json"
-).resolve())
-cfg["training"]["data_root"] = str(DATA_DIR.resolve())
+cfg["decoder"]["decoder_file"] = str(DATA_DIR.joinpath(
+    "./dp-cvep/sub-P001_ses-S001_classifier.joblib").resolve())
+cfg["decoder"]["decoder_meta_file"] = str(DATA_DIR.joinpath(
+    "./dp-cvep/sub-P001_ses-S001_classifier_meta.json").resolve())
+cfg["decoder"]["decoder_subset_layout_file"] = DATA_DIR.joinpath(
+    "dp-cvep-speller/cvep_speller/codes/decoder_subset_layout.json").resolve()
+
 cfg["training"]["codes_file"] = str(CODES_FILE.resolve())
-cfg["training"]["optimal_layout_file"] = str(LAYOUT_FILE.resolve())
-
-cfg["training"]["features"]["data_stream_name"] = EEG_LSL_STREAM_NAME
-cfg["training"]["features"]["lsl_marker_stream_name"] = MARKER_LSL_STREAM_NAME
-cfg["training"]["features"]["selected_channels"] = [
-    "EX1", "EX2", "EX3", "EX4", "EX5", "EX6", "EX7",
-]
-
-cfg["training"]["decoder"]["event"] = "contrast"
-cfg["training"]["decoder"]["encoding_length_s"] = 0.3
-cfg["training"]["decoder"]["tmin_s"] = 0.1
-cfg["training"]["decoder"]["target_accuracy"] = 0.999
 
 cfg["online"]["codes_file"] = str(CODES_FILE.resolve())
-cfg["online"]["classifier"]["file"] = str(DATA_DIR.joinpath(
-    "./dp-cvep/sub-P001_ses-S001_classifier.joblib"
-).resolve())
-cfg["online"]["classifier"]["meta_file"] = str(DATA_DIR.joinpath(
-    "./dp-cvep/sub-P001_ses-S001_classifier_meta.json"
-).resolve())
+cfg["online"]["max_eval_time_s"] = 4.3
 
-cfg["online"]["input"]["lsl_stream_name"] = EEG_LSL_STREAM_NAME
-cfg["online"]["input"]["lsl_marker_stream_name"] = MARKER_LSL_STREAM_NAME
-cfg["online"]["input"]["selected_channels"] = [
-    "EX1", "EX2", "EX3", "EX4", "EX5", "EX6", "EX7",
-]
+cfg["streams"]["marker_stream_name"] = MARKER_STREAM_NAME
+cfg["streams"]["data_stream_name"] = DATA_STREAM_NAME
+cfg["streams"]["decoder_stream_name"] = DECODER_STREAM_NAME
 
-cfg["online"]["output"]["lsl_stream_name"] = DECODER_OUTPUT_LSL_STREAM_NAME
-
-cfg["online"]["eval"]["start"]["marker"] = "start_trial"
-cfg["online"]["eval"]["start"]["max_time_s"] = 4.3
-
-# remove unnecessary
-cfg["online"]["eval"].pop("eval_after_nsamples")
-cfg["online"]["eval"].pop("marker")
+cfg["decoder"]["event"] = "contrast"
+cfg["decoder"]["encoding_length_s"] = 0.3
+cfg["decoder"]["tmin_s"] = 0.1
+cfg["decoder"]["target_accuracy"] = 0.999
 
 toml.dump(cfg, open(decoder_cfg_pth, "w"))
 
@@ -211,7 +191,8 @@ toml.dump(cfg, open(decoder_cfg_pth, "w"))
 speller_cfg_pth = root_dir.joinpath("dp-cvep-speller/configs/speller.toml")
 cfg = toml.load(speller_cfg_pth)
 
-cfg["run"]["online"]["decoder"]["lsl_stream_name"] = DECODER_OUTPUT_LSL_STREAM_NAME
+cfg["streams"]["marker_stream_name"] = MARKER_STREAM_NAME
+cfg["streams"]["decoder_stream_name"] = DECODER_STREAM_NAME
 
 cfg["speller"]["screen"]["resolution"] = [2560, 1440]
 

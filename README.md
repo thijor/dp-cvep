@@ -43,8 +43,7 @@ python -m mockup_streamer.random_cli --stream_name="BioSemi" --sfreq=512
 ```
 
 8. Change the following in the dp-cvep-decoder `decoder.toml` config:
-   - The selected channels: `training.features.selected_channels = [0, 1, 2, 3, 4, 5, 6]`
-   - The selected channels: `online.input.selected_channels = [0, 1, 2, 3, 4, 5, 6]`
+   - The selected channels: `data.selected_channels = [0, 1, 2, 3, 4, 5, 6]`
 
 ## Running
 
