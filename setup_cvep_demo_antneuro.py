@@ -189,6 +189,8 @@ cfg = toml.load(speller_cfg_pth)
 cfg["streams"]["marker_stream_name"] = MARKER_STREAM_NAME
 cfg["streams"]["decoder_stream_name"] = DECODER_STREAM_NAME
 
+cfg["decoder"]["decoder_subset_layout_file"] = str(DATA_DIR.joinpath("decoder_subset_layout.json").resolve())
+
 cfg["speller"]["screen"]["resolution"] = [1920, 1080]
 
 toml.dump(cfg, open(speller_cfg_pth, "w"))
