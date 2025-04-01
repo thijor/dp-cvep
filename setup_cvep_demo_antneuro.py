@@ -159,12 +159,9 @@ cfg["data"]["data_root"] = str(DATA_DIR.resolve())
 cfg["data"]["selected_channels"] = [1, 14, 28, 27, 30, 24, 29]
 cfg["data"]["capfile"] = str(root_dir.joinpath("dp-cvep-decoder/cvep_decoder/caps/antneuro7.loc").resolve())
 
-cfg["decoder"]["decoder_file"] = str(DATA_DIR.joinpath(
-    "./dp-cvep/sub-P001_ses-S001_classifier.joblib").resolve())
-cfg["decoder"]["decoder_meta_file"] = str(DATA_DIR.joinpath(
-    "./dp-cvep/sub-P001_ses-S001_classifier_meta.json").resolve())
-cfg["decoder"]["decoder_subset_layout_file"] = DATA_DIR.joinpath(
-    "dp-cvep-speller/cvep_speller/codes/decoder_subset_layout.json").resolve()
+cfg["decoder"]["decoder_file"] = str(DATA_DIR.joinpath("decoder.joblib").resolve())
+cfg["decoder"]["decoder_meta_file"] = str(DATA_DIR.joinpath("decoder_meta.json").resolve())
+cfg["decoder"]["decoder_subset_layout_file"] = str(DATA_DIR.joinpath("decoder_subset_layout.json").resolve())
 
 cfg["training"]["codes_file"] = str(root_dir.joinpath("dp-cvep-speller/cvep_speller/codes/mgold_61_6521.npz").resolve())
 
