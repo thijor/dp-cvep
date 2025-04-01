@@ -206,8 +206,5 @@ suffix = ".ps1" if platform == "win32" else ".sh"
 script_file = root_dir.resolve() / "dp-control-room" / f"run_cvep_experiment{suffix}"
 
 with open(script_file, "w") as f:
-    f.write(
-        f"""
-        python -m control_room.main --setup_cfg_path="{control_room_cfg_pth.resolve()}"
-        """
-    )
+    f.write(f'python -m control_room.main --setup_cfg_path="{control_room_cfg_pth.resolve()}"')
+
