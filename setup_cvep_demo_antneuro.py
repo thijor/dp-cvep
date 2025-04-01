@@ -26,10 +26,10 @@ import toml
 SETUP_FOLDER_NAME = "cvep_speller_env"
 BRANCH_NAME = SETUP_FOLDER_NAME  # used within each module
 
-CONTROL_ROOM_URL = "git@github.com:bsdlab/dp-control-room.git"
-DECODER_URL = "git@github.com:thijor/dp-cvep-decoder.git"
-SPELLER_URL = "git@github.com:thijor/dp-cvep-speller.git"
-LSL_URL = "git@github.com:bsdlab/dp-lsl-recording.git"
+CONTROL_ROOM_URL = "https://github.com/bsdlab/dp-control-room.git"
+DECODER_URL = "https://github.com/thijor/dp-cvep-decoder.git"
+SPELLER_URL = "https://github.com/thijor/dp-cvep-speller.git"
+LSL_URL = "https://github.com/bsdlab/dp-lsl-recording.git"
 
 DATA_STREAM_NAME = "EE225-000000-000945-02-DCC-TMSI-04"
 MARKER_STREAM_NAME = "cvep-speller-stream"

@@ -26,10 +26,11 @@ import toml
 SETUP_FOLDER_NAME = "cvep_speller_env"
 BRANCH_NAME = SETUP_FOLDER_NAME  # used within each module
 
-CONTROL_ROOM_URL = "git@github.com:bsdlab/dp-control-room.git"
-DECODER_URL = "git@github.com:thijor/dp-cvep-decoder.git"
-SPELLER_URL = "git@github.com:thijor/dp-cvep-speller.git"
-LSL_URL = "git@github.com:bsdlab/dp-lsl-recording.git"
+CONTROL_ROOM_URL = "https://github.com/bsdlab/dp-control-room.git"
+DECODER_URL = "https://github.com/thijor/dp-cvep-decoder.git"
+SPELLER_URL = "https://github.com/thijor/dp-cvep-speller.git"
+LSL_URL = "https://github.com/bsdlab/dp-lsl-recording.git"
+MOCKUP_URL = "https://github.com/bsdlab/dp-mockup-streamer.git"
 
 DATA_STREAM_NAME = "mockup"
 MARKER_STREAM_NAME = "cvep-speller-stream"
@@ -53,8 +54,8 @@ except FileExistsError:
 
 # SSH ide via the Repo.clone_from did not work -> use manual subprocess calls
 repos = []
-repo_dirs = ["dp-control-room", "dp-cvep-decoder", "dp-cvep-speller", "dp-lsl-recording"]
-for url, repo_dir in zip([CONTROL_ROOM_URL, DECODER_URL, SPELLER_URL, LSL_URL], repo_dirs):
+repo_dirs = ["dp-control-room", "dp-cvep-decoder", "dp-cvep-speller", "dp-lsl-recording", "dp-mockup-streamer"]
+for url, repo_dir in zip([CONTROL_ROOM_URL, DECODER_URL, SPELLER_URL, LSL_URL, MOCKUP_URL], repo_dirs):
     cmd = f'git clone -v -- {url} {SETUP_FOLDER_NAME}/{repo_dir}'
     subprocess.run(cmd, shell=True)
     repos.append(Repo(root_dir / repo_dir))
