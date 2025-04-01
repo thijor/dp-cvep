@@ -31,7 +31,7 @@ DECODER_URL = "git@github.com:thijor/dp-cvep-decoder.git"
 SPELLER_URL = "git@github.com:thijor/dp-cvep-speller.git"
 LSL_URL = "git@github.com:bsdlab/dp-lsl-recording.git"
 
-DATA_STREAM_NAME = "BioSemi"
+DATA_STREAM_NAME = "EE225-000000-000945-02-DCC-TMSI-04"
 MARKER_STREAM_NAME = "cvep-speller-stream"
 DECODER_STREAM_NAME = "cvep-decoder-stream"
 
@@ -72,8 +72,6 @@ for repo in repos:
 
 # Data directory relative to SETUP_FOLDER_NAME
 DATA_DIR = root_dir.joinpath("./data").resolve()
-CODES_FILE = root_dir.joinpath("dp-cvep-speller/cvep_speller/codes/mgold_61_6521.npz")
-CAP_FILE = root_dir.joinpath("dp-cvep-decoder/cvep_decoder/caps/thielen7.loc")
 
 # ----------------------------------------------------------------------------
 # Create configs
@@ -89,7 +87,7 @@ control_room_cfg = f"""
 modules_root = '../'                                                            
 
 
-# -------------------- Cvep Decoder  ----------------------------------------
+# -------------------- c-VEP Decoder  ---------------------------------------
 [python.modules.dp-cvep-decoder]                                        
     type = 'decoding'
     port = 8083
@@ -158,8 +156,8 @@ decoder_cfg_pth = root_dir.joinpath("dp-cvep-decoder/configs/decoder.toml")
 cfg = toml.load(decoder_cfg_pth)
 
 cfg["data"]["data_root"] = str(DATA_DIR.resolve())
-cfg["data"]["selected_channels"] = ["EX1", "EX2", "EX3", "EX4", "EX5", "EX6", "EX7"]
-cfg["data"]["capfile"] = str(CAP_FILE.resolve())
+cfg["data"]["selected_channels"] = [1, 14, 28, 27, 30, 24, 29]
+cfg["data"]["capfile"] = str(root_dir.joinpath("dp-cvep-decoder/cvep_decoder/caps/antneuro7.loc").resolve())
 
 cfg["decoder"]["decoder_file"] = str(DATA_DIR.joinpath(
     "./dp-cvep/sub-P001_ses-S001_classifier.joblib").resolve())
@@ -168,9 +166,9 @@ cfg["decoder"]["decoder_meta_file"] = str(DATA_DIR.joinpath(
 cfg["decoder"]["decoder_subset_layout_file"] = DATA_DIR.joinpath(
     "dp-cvep-speller/cvep_speller/codes/decoder_subset_layout.json").resolve()
 
-cfg["training"]["codes_file"] = str(CODES_FILE.resolve())
+cfg["training"]["codes_file"] = str(root_dir.joinpath("dp-cvep-speller/cvep_speller/codes/mgold_61_6521.npz").resolve())
 
-cfg["online"]["codes_file"] = str(CODES_FILE.resolve())
+cfg["online"]["codes_file"] = cfg["training"]["codes_file"]
 cfg["online"]["max_eval_time_s"] = 4.3
 
 cfg["streams"]["marker_stream_name"] = MARKER_STREAM_NAME
@@ -194,7 +192,7 @@ cfg = toml.load(speller_cfg_pth)
 cfg["streams"]["marker_stream_name"] = MARKER_STREAM_NAME
 cfg["streams"]["decoder_stream_name"] = DECODER_STREAM_NAME
 
-cfg["speller"]["screen"]["resolution"] = [2560, 1440]
+cfg["speller"]["screen"]["resolution"] = [1920, 1080]
 
 toml.dump(cfg, open(speller_cfg_pth, "w"))
 
