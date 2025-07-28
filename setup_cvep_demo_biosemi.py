@@ -156,8 +156,8 @@ decoder_cfg_pth = root_dir.joinpath("dp-cvep-decoder/configs/decoder.toml")
 cfg = toml.load(decoder_cfg_pth)
 
 cfg["data"]["data_root"] = str(DATA_DIR.resolve())
-cfg["data"]["selected_channels"] = ["EX1", "EX2", "EX3", "EX4", "EX5", "EX6", "EX7"]
-cfg["data"]["capfile"] = str(root_dir.joinpath("dp-cvep-decoder/cvep_decoder/caps/biosemi7.loc").resolve())
+cfg["data"]["selected_channels"] = ["EX1", "EX2", "EX3", "EX4", "EX5", "EX6"]
+cfg["data"]["capfile"] = str(root_dir.joinpath("dp-cvep-decoder/cvep_decoder/caps/biosemi6.loc").resolve())
 
 cfg["decoder"]["decoder_file"] = str(DATA_DIR.joinpath("decoder.joblib").resolve())
 cfg["decoder"]["decoder_meta_file"] = str(DATA_DIR.joinpath("decoder_meta.json").resolve())
