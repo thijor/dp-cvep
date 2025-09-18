@@ -1,6 +1,6 @@
 # Dareplane c-VEP Demo
 
-This repository contains the documentation and resources to set up a demo of a c-VEP BCI for communication using [Dareplane](https://github.com/bsdlab/Dareplane). 
+This repository contains documentation and resources to set up a demo of a brain-computer interface (BCI) for communication, that uses the code-modulated visual evoked potential (c-VEP). This setup makes use of the [Dareplane](https://bsdlab.github.io/Dareplane/main.html) platform for closed-loop experiments.
 
 ## Setup
 
@@ -36,7 +36,7 @@ pip install -r requirements.txt
 
 5. Install the [LSL Lab Recorder](https://github.com/labstreaminglayer/App-LabRecorder). Make sure it is running on the background.
 
-## Demo with the ANTneuro amplifier
+## Demo with an ANTneuro amplifier
 
 This demo has been set up for the ANTneuro Eego amplifier together with one of the DCC lab's demo laptops. It uses 7 electrodes (Fpz, Cz, Pz, POz, Oz, O1, O2) and a screen with a 60 Hz presentation rate and 1920 x 1080 resolution.
 
@@ -46,7 +46,7 @@ During the setup, use:
 python setup_cvep_demo_antneuro.py
 ```
 
-## Demo with the Biosemi amplifier
+## Demo with a Biosemi amplifier
 
 This demo has been set up for the Biosemi Active2 amplifier together with the DCC lab setup in MM 01.422. It uses 7 EX electrodes (Fpz, Cz, POz, Oz, Iz, O1, O2) and a screen with a 60 Hz presentation rate and 2560 x 1440 resolution.
 
@@ -129,12 +129,39 @@ There are some known issues and "solutions":
   - Make sure there are no other LSL streams running yet (e.g., the EEG/mockup stream). Start the control room first. Only when the control room is alive, start any other streams.
   - First start without the LSL recorder, it crashes. Then restart with the Recorder, then it works. Magic.
 - If you ran `FIT MODEL` and you get the error saying 'No training files found', double-check the saved data in the `data` directory. For instance, the file should have capitals for P001 and S001, which are lowercase depending on the LSL Recorder version.
-- If you just ran the speller (either `TRAINING` or `ONLINE`), and want to run it again, it might complain that it 'wants to add keys that already exist'. Somehow the speller is not closed fully the previous time, so cannot reopen. Kill everything and restart the control room. 
+- If you just ran the speller (either `TRAINING` or `ONLINE`), and want to run it again, it might complain that it 'wants to add keys that already exist'. Somehow the speller is not closed fully the previous time, so cannot reopen. Kill all processes and restart the control room. 
 - If you just ran `ONLINE` and stopped the speller in any way, the decoder will still be running. Depending on your needs, stop the decoder by pressing `STOP` in dp-cvep-decoder.
 - If you run the online phase and want to record the data, pressing `RUN ONLINE` might crash the decoder stream. A workaround is to not press `RUN ONLINE`, but instead record manually via the LSL Recorder app.
 
-## References
+## Citation
 
-- Dold, M., Pereira, J., Sajonz, B., Coenen, V. A., Thielen, J., Janssen, M. L., & Tangermann, M. (2025). Dareplane: a modular open-source software platform for BCI research with application in closed-loop deep brain stimulation. Journal of Neural Engineering, 22(2), 026029. doi: [10.1088/1741-2552/adbb20](https://doi.org/10.1088/1741-2552/adbb20)
-- Thielen, J., Van Den Broek, P., Farquhar, J., & Desain, P. (2015). Broad-band visually evoked potentials: re(con)volution in brain-computer interfacing. PLOS One, 10(7), e0133797. doi: [10.1371/journal.pone.0133797](https://doi.org/10.1371/journal.pone.0133797)
-- Thielen, J., Marsman, P., Farquhar, J., & Desain, P. (2021). From full calibration to zero training for a code-modulated visual evoked potentials for brain–computer interface. Journal of Neural Engineering, 18(5), 056007. doi: [0.1088/1741-2552/abecef](https://doi.org/0.1088/1741-2552/abecef)
+If you use [Dareplane](https://bsdlab.github.io/Dareplane/main.html) or this demo for your work, please cite both the following two references:
+```bibtex
+@article{dold2025,
+    title = {Dareplane: a modular open-source software platform for {BCI} research with application in closed-loop deep brain stimulation},
+    author = {Dold, Matthias and Pereira, Joana and Sajonz, Bastian and Coenen, Volker A and Thielen, Jordy and Janssen, Marcus L F and Tangermann, Michael},
+    journal = {Journal of Neural Engineering},
+    year = {2025},
+    month = {mar},
+    publisher = {IOP Publishing},
+    volume = {22},
+    number = {2},
+    pages = {026029},
+    doi = {10.1088/1741-2552/adbb20},
+    url = {https://doi.org/10.1088/1741-2552/adbb20},
+}
+```
+```bibtex
+@article{thielen2021,
+    title = {From full calibration to zero training for a code-modulated visual evoked potentials for brain--computer interface},
+    author = {Thielen, Jordy and Marsman, Pieter and Farquhar, Jason and Desain, Peter},
+    journal = {Journal of Neural Engineering},
+    publisher = {IOP Publishing Ltd},
+    volume = {18},
+    number = {5},
+    pages = {056007},
+    year = {2021},
+    doi = {10.1088/1741-2552/abecef},
+    url = {https://doi.org/10.1088/1741-2552/abecef}
+}
+```
