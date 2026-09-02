@@ -164,7 +164,7 @@ cfg["decoder"]["decoder_file"] = str(DATA_DIR.joinpath("decoder.joblib").resolve
 cfg["decoder"]["decoder_meta_file"] = str(DATA_DIR.joinpath("decoder_meta.json").resolve())
 cfg["decoder"]["decoder_subset_layout_file"] = str(DATA_DIR.joinpath("decoder_subset_layout.json").resolve())
 
-cfg["training"]["codes_file"] = str(root_dir.joinpath("dp-cvep-speller/cvep_speller/codes/mgold_61_6521.npz").resolve())
+cfg["training"]["codes_file"] = str(root_dir.joinpath("dp-cvep-speller/cvep_speller/codes/mgold_61_6521.txt").resolve())
 
 cfg["online"]["codes_file"] = cfg["training"]["codes_file"]
 cfg["online"]["max_eval_time_s"] = 4.3
